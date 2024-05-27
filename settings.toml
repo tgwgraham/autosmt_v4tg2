@@ -1,0 +1,100 @@
+###################
+#  macro settings #
+###################
+
+[macro_settings]
+    basefname = 'F:/automation_v4tg2/'
+    
+    GRIDSIZE = 15                   # number of grid points along each axis
+    STEPSIZEMICRONS = 150           # step size in microns between grid points
+    cellFindingOC = "TG_646_lo"     # optical configuration for finding cells
+    preBleachingOC = "TG_646_noEM"	# optical configuration for pre-bleaching (reduce EM gain to 0 to protect the camera)
+    ISOC = "TG_646" 			    # optical configuration for illumination sequence (increase EM gain to 300)
+    bleachTime = 10                  # time to bleach cells prior to running illumination sequence
+                                    # if this is set to 0, then the pre-bleach sequence will not occur
+    ISname = "TG_PAPA1"            # NIS Elements illumination sequence name
+    DOINJECTION = -1                # Set to 1 to include an autoinjection step. Set to -1 otherwise.
+    INJECTAFTER = -1                # If autoinjection is set up, do autoinjection after this frame number
+
+    minarea = 5000              # minimum area of ROI
+    maxarea = 100000            # maximum area of ROI
+    minint = 0                  # minimum mean pixel intensity in cell-finding channel
+    maxint = 100000             # maximum mean pixel intensity in cell-finding channel
+    defaultROIsize = [150,150]  # default size for regions of interest if resizeROI is set to false or if cells are not re-located
+    resizeROI = true            # Whether or not to resize the ROI to fit tightly around the cell
+    selectionMode = "largest"   # options: largest - chooses the largest cell
+                                #           random - chooses a random cell
+                                
+    ispapa = true
+    
+    # If extraOC option is selected, list the extra optical configurations with unique names below
+    # For each, provide a minimum and maximum intensity. (If you do not want to gate for intensity in
+    # a given channel, simply set minint=0 and maxint=100000, or some other number greater than 2^16).
+    
+    #[macro_settings.extraOCs.JFX549]
+    #    extraOC = "TG_549_low"  # NIS Elements optical configuration to use for this channel
+    #    minint = 0              # minimum mean pixel intensity in this channel
+    #    maxint = 100000         # maximum mean pixel intensity in this channel
+     
+
+#####################
+#  PAPA parameters  #
+#####################
+
+# Note that these will NOT change the actual illumination sequence, only how it is analyzed
+
+[illumination_sequence]
+    ncycles = 5    # number of cycles of the sequence r-v-r-r-g-r
+    r = 30         # number of red frames that were recorded
+    v = 0           # number of violet frames that were recorded
+    g = 0           # number of green frames that were recorded
+    framewindow = 30    # number of frames after pulse to include in PAPA/DR trajectories
+    gfirst = false
+
+# Note: In the original PAPA illumination sequence, we recorded green and violet
+# frames as well as all of the red illumination frames between green and violet pulses.
+# However, it is more efficient in terms of data storage to record only those red 
+# frames just before and just after the green and violet pulses. The above settings 
+# correspond to such an illumination sequence.
+
+
+#########################
+#  Tracking parameters  #
+#########################
+
+# Image reading and filtering settings
+[filter]
+    start = 0
+    method = "identity"
+    chunk_size = 100
+
+# Spot detection settings
+[detect]
+    method = "llr"
+    k = 1.2
+    w = 15
+    t = 18.0
+
+# Subpixel localization settings
+[localize]
+    method = 'ls_int_gaussian'
+    window_size = 9
+    sigma = 1.2
+    ridge = 0.0001
+    max_iter = 10
+    damp = 0.3
+    camera_gain = 109.0
+    camera_bg = 470.0
+
+# Tracking settings
+[track]
+    method = 'conservative'
+    pixel_size_um = 0.160
+    frame_interval = 0.00748
+    search_radius = 1.0
+    max_blinks = 0
+    min_I0 = 0.0
+    scale = 7.0
+
+
+
