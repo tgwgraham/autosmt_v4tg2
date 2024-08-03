@@ -13,3 +13,5 @@ macro_settings.extraOCs entries. The microscope will raster over a GRIDSIZE x GR
 You can pause and resume the macro as needed to refocus the cells, manually add compounds to the sample, etc. If you have to abort the macro, you may have to do this twice, as it runs a few nested macros-within-a-macro. It is usually best to re-start masterscript.py and realtime_analysis.py.
 
 The data and analysis will be in a folder called "output". It is easiest to transfer this after the experiment to another folder on the same hard drive and rename it to something more informative. You can delete the "temp" folder after the experiment is over.
+
+Notebook realtime_PAPA_stats.ipynb can be used to visualize PAPA results in real time.
