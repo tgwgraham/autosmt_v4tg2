@@ -15,7 +15,7 @@ import random
 import toml
 
 
-macroname = 'v4tg2.mac'
+macroname = 'autosmt.mac'
 
 settings = toml.load('settings.toml')
 ms = settings['macro_settings']
